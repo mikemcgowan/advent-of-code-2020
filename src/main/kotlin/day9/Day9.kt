@@ -9,14 +9,12 @@ fun main() {
     part2(lines, part1(lines))
 }
 
-fun List<Long>.hasPairOfSum(sum: Long): Boolean {
-    forEach { z1 ->
-        forEach { z2 ->
-            if (z1 != z2 && z1 + z2 == sum) return true
+fun List<Long>.hasPairOfSum(sum: Long): Boolean =
+    indices.any { i ->
+        indices.any { j ->
+            i != j && this[i] + this[j] == sum
         }
     }
-    return false
-}
 
 fun part1(lines: List<Long>): Long {
     val x = lines
