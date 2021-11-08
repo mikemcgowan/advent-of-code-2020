@@ -16,7 +16,7 @@ fun part1(lines: List<Long>): Long {
         var found = false
         zs.forEach { z1 ->
             zs.forEach { z2 ->
-                if (z1 + z2 == target) found = true
+                if (z1 != z2 && z1 + z2 == target) found = true
             }
         }
         found
