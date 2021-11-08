@@ -9,18 +9,21 @@ fun main() {
     part2(lines, part1(lines))
 }
 
-fun part1(lines: List<Long>): Long {
-    val x = lines.windowed(preamble + 1).filterNot { xs ->
-        val target = xs.last()
-        val zs = xs.dropLast(1)
-        var found = false
-        zs.forEach { z1 ->
-            zs.forEach { z2 ->
-                if (z1 != z2 && z1 + z2 == target) found = true
-            }
+fun List<Long>.hasPairOfSum(sum: Long): Boolean {
+    forEach { z1 ->
+        forEach { z2 ->
+            if (z1 != z2 && z1 + z2 == sum) return true
         }
-        found
-    }.first().last()
+    }
+    return false
+}
+
+fun part1(lines: List<Long>): Long {
+    val x = lines
+        .windowed(preamble + 1)
+        .filterNot { it.dropLast(1).hasPairOfSum(it.last()) }
+        .first()
+        .last()
     println(x)
     return x
 }
