@@ -6,7 +6,10 @@ val preamble = 25
 
 fun main() {
     val lines = File("src/main/kotlin/day9/input.txt").readLines().map { it.toLong() }
-    part2(lines, part1(lines))
+    val p1 = part1(lines)
+    println(p1)
+    val p2 = part2(lines, p1)
+    println(p2)
 }
 
 fun List<Long>.hasPairOfSum(sum: Long): Boolean =
@@ -16,22 +19,23 @@ fun List<Long>.hasPairOfSum(sum: Long): Boolean =
         }
     }
 
-fun part1(lines: List<Long>): Long {
-    val x = lines
-        .windowed(preamble + 1)
-        .filterNot { it.dropLast(1).hasPairOfSum(it.last()) }
-        .first()
-        .last()
-    println(x)
-    return x
-}
+fun part1(lines: List<Long>): Long = lines
+    .asSequence()
+    .windowed(preamble + 1)
+    .filterNot { it.dropLast(1).hasPairOfSum(it.last()) }
+    .first()
+    .last()
 
-fun part2(lines: List<Long>, target: Long) {
+fun part2(lines: List<Long>, target: Long): Long? {
     (2..lines.size).forEach { w ->
-        lines.windowed(w).firstOrNull { it.sum() == target }?.let {
-            val ys = it.sorted()
-            println(ys.first() + ys.last())
-            return
-        }
+        lines
+            .asSequence()
+            .windowed(w)
+            .firstOrNull { it.sum() == target }
+            ?.let {
+                val ys = it.sorted()
+                return ys.first() + ys.last()
+            }
     }
+    return null
 }
