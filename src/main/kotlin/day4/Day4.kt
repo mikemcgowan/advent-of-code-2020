@@ -1,3 +1,5 @@
+package day4
+
 import java.io.File
 
 const val fieldCount = 8
